@@ -2,11 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
-def index(request):
-    return render(request, 'base.html')
-
+# Login Functionality
 def home(request):
-
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
@@ -22,3 +19,9 @@ def home(request):
         return render(request,'home.html')
     
     return render(request, 'home.html')
+
+# Logout Functionality
+def logout_user(request):
+    logout(request)
+    messages.success(request, "You have been logout successfully")
+    return redirect('home')
