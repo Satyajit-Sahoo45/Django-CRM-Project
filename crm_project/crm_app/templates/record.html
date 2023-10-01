@@ -17,6 +17,7 @@
             <strong>State:</strong>{{record.state}} <br>
         </p>
         <a href="{% url 'home' %}" class="btn btn-secondary">Go Back</a>
+        <a href="{% url 'delete' record.id %}" class="btn btn-danger">Delete</a>
     </div>
 </div>
 

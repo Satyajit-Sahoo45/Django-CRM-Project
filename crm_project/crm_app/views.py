@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import SignUpForm
+from .forms import addrecord
 from .models import Record
 
 # Login Functionality
@@ -61,3 +62,31 @@ def customer_record(request, id):
         messages.success(request, "You must have to login to see the record..")
         return redirect('home')
 
+# DELETE RECORD DATA
+def delete_record(request, id):
+    if request.user.is_authenticated:
+        delete_record = Record.objects.get(id=id)
+        delete_record.delete()
+        messages.success(request, "The selected record has been deleted.")
+        return redirect('home')
+    else:
+        messages.success(request, "You must have to login to delete record!")
+        return redirect('home')
+
+#  ADD RECORD   
+def add_record(request):
+    form = addrecord()
+    if request.user.is_authenticated:
+        if request.method=="POST":
+            form = addrecord(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Record added successfully.....")
+                return redirect('home')
+            else:
+                messages.success(request, "Given data is not valid.!!")
+                return redirect('add_record')
+    else:
+        messages.success(request, "You must have to login to add record!")
+        return redirect('home')
+    return render(request, 'addrecord.html', {'form': form})
