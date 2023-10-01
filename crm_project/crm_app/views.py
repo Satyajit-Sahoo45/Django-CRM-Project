@@ -45,7 +45,7 @@ def Register_user(request):
             messages.success(request, "Entered password is not same!!!")
             return redirect('register')
         else:
-            # print(form.errors)
+            print(form.errors)
             messages.error(request, "You have not entered correct data for Registration")
             return redirect('register')
     else:
@@ -53,7 +53,7 @@ def Register_user(request):
         return render(request, 'Register.html', {'form':form})
     return render(request, 'Register.html')
 
-# 
+# FETCH CUSTOMER RECORD FUNCTION
 def customer_record(request, id):
     if request.user.is_authenticated:
         customer_data = Record.objects.get(id=id)
@@ -73,7 +73,7 @@ def delete_record(request, id):
         messages.success(request, "You must have to login to delete record!")
         return redirect('home')
 
-#  ADD RECORD   
+#  ADD RECORD FUNCTION
 def add_record(request):
     form = addrecord()
     if request.user.is_authenticated:
@@ -90,3 +90,17 @@ def add_record(request):
         messages.success(request, "You must have to login to add record!")
         return redirect('home')
     return render(request, 'addrecord.html', {'form': form})
+
+# EDIT/UPDATE RECORD FUNCTION
+def update_record(request, id):
+    if request.user.is_authenticated:
+        cur_record = Record.objects.get(id=id)
+        form = addrecord(request.POST or None, instance=cur_record)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Record updated successfully.")
+            return redirect('home')
+        return render(request, 'update.html', {'form':form})
+    else:
+        messages.success(request, "You must have to login to edit record!")
+        return redirect('home')

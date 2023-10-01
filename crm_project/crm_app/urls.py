@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home, logout_user, Register_user, customer_record, delete_record, add_record
+from .views import home, logout_user, Register_user, customer_record, delete_record, add_record, update_record
 
 urlpatterns = [
     path('', home, name="home"),
@@ -8,4 +8,5 @@ urlpatterns = [
     path('record/<int:id>', customer_record, name="record"),
     path('delete_record/<int:id>', delete_record, name="delete"),
     path('add_record/', add_record, name="add"),
+    path('update_record/<int:id>', update_record, name="update"),
 ]
