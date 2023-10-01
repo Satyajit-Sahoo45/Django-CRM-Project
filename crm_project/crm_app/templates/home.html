@@ -2,7 +2,40 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-<h1>Welcome to home page</h1>
+<div class="container">
+    <h1>Welcome to home page</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">created_at</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone no</th>
+                <th scope="col">City</th>
+                <th scope="col">State</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if records %}
+            {% for record in records%}
+            <tr>
+                <td><a href="{% url 'record' record.id %}">{{record.id}}</a></td>
+                <td>{{record.created_at}}</td>
+                <td>{{record.first_name}}</td>
+                <td>{{record.last_name}}</td>
+                <td>{{record.email}}</td>
+                <td>{{record.phone}}</td>
+                <td>{{record.city}}</td>
+                <td>{{record.state}}</td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+</div>
 {% else %}
 <div class="col-4 offset-4">
     <h1>Login</h1>

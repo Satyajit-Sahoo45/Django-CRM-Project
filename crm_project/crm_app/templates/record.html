@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card col-4 offset-4" style="width: 18rem;">
+    <div class="card-body">
+        <div class="card-header">
+            <h5 class="card-title">Customer Details</h5>
+        </div>
+        <p class="card-text">
+            <strong>ID:</strong>{{record.id}} <br>
+            <strong>Created_at:</strong>{{record.created_at}} <br>
+            <strong>Name:</strong>{{record.first_name}} {{record.last_name}} <br>
+            <strong>Email:</strong>{{record.email}} <br>
+            <strong>Phone No:</strong>{{record.phone}} <br>
+            <strong>City:</strong>{{record.city}} <br>
+            <strong>State:</strong>{{record.state}} <br>
+        </p>
+        <a href="{% url 'home' %}" class="btn btn-secondary">Go Back</a>
+    </div>
+</div>
+
+
+{% endblock content %}
