@@ -1,6 +1,6 @@
 # Django-CRM-Project
 
 # create a virtual environment before running the django
-# add download django, psycopg2
+# install django, psycopg2, django-import-export and django-auto-logout packages in virtual environment
 
-# then run the django server check, it will run
+# Then run the Django server...
