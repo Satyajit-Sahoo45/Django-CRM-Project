@@ -8,6 +8,7 @@ class Record(models.Model):
     phone = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
     state = models.CharField(max_length=255)
+    profile = models.ImageField(null=True, blank=True,upload_to="images/")
 
     class Meta:
         db_table = "records"

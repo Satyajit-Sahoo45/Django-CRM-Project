@@ -8,6 +8,9 @@
             <h5 class="card-title">Customer Details</h5>
         </div>
         <p class="card-text">
+            {% if record.profile %}
+            <strong>Profile:</strong><img src="{{record.profile.url}}" alt="profile_image" width="250" height="100"><br>
+            {% endif %}
             <strong>ID:</strong>{{record.id}} <br>
             <strong>Created_at:</strong>{{record.created_at}} <br>
             <strong>Name:</strong>{{record.first_name}} {{record.last_name}} <br>

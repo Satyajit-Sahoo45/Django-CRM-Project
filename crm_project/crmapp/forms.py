@@ -23,7 +23,8 @@ class addrecord(forms.ModelForm):
     phone = forms.CharField(label='Phone No', widget=forms.TextInput(attrs={'class':'form-control'}))
     city = forms.CharField(label='City', widget=forms.TextInput(attrs={'class':'form-control'}))
     state = forms.CharField(label='State', widget=forms.TextInput(attrs={'class':'form-control'}))
+    profile = forms.ImageField(label='Profile')
     
     class Meta:
         model=Record
-        fields=('first_name', 'last_name', 'email', 'phone', 'city', 'state')
+        fields=('first_name', 'last_name', 'email', 'phone', 'city', 'state', 'profile')

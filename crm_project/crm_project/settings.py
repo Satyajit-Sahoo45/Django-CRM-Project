@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'crm_app',
+    'crmapp',
     'import_export',
 ]
 
@@ -129,8 +130,12 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#  auto logout
+# auto logout
 AUTO_LOGOUT = {
     'IDLE_TIME': 3600,
     'MESSAGE': 'The session has expired. Please login again to continue.'
 }
+
+# media
+MEDIA_URL = "/media/"
+MEDIA_ROOT=os.path.join(BASE_DIR,'media')

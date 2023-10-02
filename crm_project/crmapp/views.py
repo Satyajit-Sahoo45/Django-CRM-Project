@@ -78,14 +78,14 @@ def add_record(request):
     form = addrecord()
     if request.user.is_authenticated:
         if request.method=="POST":
-            form = addrecord(request.POST)
+            form = addrecord(request.POST, request.FILES)
             if form.is_valid():
                 form.save()
                 messages.success(request, "Record added successfully.....")
                 return redirect('home')
             else:
                 messages.success(request, "Given data is not valid.!!")
-                return redirect('add_record')
+                return redirect('add')
     else:
         messages.success(request, "You must have to login to add record!")
         return redirect('home')
@@ -95,7 +95,7 @@ def add_record(request):
 def update_record(request, id):
     if request.user.is_authenticated:
         cur_record = Record.objects.get(id=id)
-        form = addrecord(request.POST or None, instance=cur_record)
+        form = addrecord(request.POST or None, request.FILES or None, instance=cur_record)
         if form.is_valid():
             form.save()
             messages.success(request, "Record updated successfully.")
