@@ -1,9 +1,28 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
+from http.client import HTTPResponse
+from smtplib import SMTPResponseException
+from django.conf import settings
+from django.core.mail import send_mail
+from django.shortcuts import render,redirect
+from django.contrib.auth import authenticate, login, logout,update_session_auth_hash
 from django.contrib import messages
 from .forms import SignUpForm
-from .forms import addrecord
+from django.contrib.auth.forms import PasswordChangeForm
 from .models import Record
+from .forms import addrecord
+import requests
+from bs4 import BeautifulSoup
+import pandas as pd 
+
+from django.contrib.sites.shortcuts import get_current_site  
+from django.utils.encoding import force_bytes
+from django.utils.encoding import force_str
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode  
+from django.template.loader import render_to_string  
+from .tokens import account_activation_token  
+from django.contrib.auth.models import User  
+from django.core.mail import EmailMessage  
+from django.contrib.auth import get_user_model
+from django.http import HttpResponse
 
 # Login Functionality
 def home(request):
@@ -104,3 +123,31 @@ def update_record(request, id):
     else:
         messages.success(request, "You must have to login to edit record!")
         return redirect('home')
+    
+#Change_Password
+def Change_Password(request):
+    if request.method=='POST':
+     fm=PasswordChangeForm(user=request.user,data=request.POST)  
+     if fm.is_valid():
+          fm.save()
+          update_session_auth_hash(request,fm.user)
+          messages.success(request,'Your password has be changed succesfully.....') 
+          return redirect('home')  
+    else:
+       fm=PasswordChangeForm(user=request.user)
+    return render (request,'Change_Password.html',{'fm':fm})
+
+#activate
+def activate(request, uidb64, token):  
+    User = get_user_model()  
+    try:  
+        uid = force_str(urlsafe_base64_decode(uidb64))  
+        user = User.objects.get(pk=uid)  
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):  
+        user = None  
+    if user is not None and account_activation_token.check_token(user, token):  
+        user.is_active = True  
+        user.save()  
+        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')  
+    else:  
+        return HttpResponse('Activation link is invalid!') 
